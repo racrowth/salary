@@ -1,0 +1,21 @@
+div {
+    width : 1000px;
+    height : 100%;
+    margin : 0 auto;
+}
+
+h1  {
+    display : block;
+    font-size : 40px;
+    text-align : center;
+}
+
+p {
+    font-style : italic;
+    font-size : 30px;
+    text-align : center;
+}
+
+p span  {
+        color : red;
+}
