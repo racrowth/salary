@@ -19,3 +19,8 @@ p {
 p span  {
         color : red;
 }
+
+img {
+    width : 100%;
+    margin : auto;
+}
