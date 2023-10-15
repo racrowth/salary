@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ColdTemp</title>
 </head>
 <body>
     <link rel="stylesheet" href="style.css">
-    
+
     <div id="container">
-        <div id="gameBox">
-            <span>Hello!<br>
-            This is Baseball game!<br>
-            you have 10 lives!<br>
-            Let's try it!</span>
-        </div>
-        <div id="inputBox">
-            <input type="text" id="inputNumber">
-            <button id="submit">히릿!</button>
-        </div>
-        <div id="warningMsg"></div>
+        <div id="inputSection"></div>
+        <input type="text" list="airportList" id="airportId" placeholder="Enter Airport ID" inputmode="numeric" pattern="[0-9]*"/>
+        <datalist id="airportList"></datalist>
+        <select name="presetTemp" id="presetTemp"></select>
+        <input type="text" id="airportAlt" placeholder="Airport Altitude" inputmode="numeric" pattern="[0-9]*"/>
+        <input type="text" id="airportTemp" placeholder="Airport Temperature" inputmode="numeric" pattern="[0-9]*"/>
+        <input type="text" id="firstAlt" placeholder="Fix1 Altitude" inputmode="numeric" pattern="[0-9]*"/>
+        <div id="firstAltCorr"></div>
+
+        <button id="altCalc">계산!</button>
+        <div id="calculation"></div>
     </div>
-    <Script src="main.js"></Script>
+
+    <script src="main.js"></script>
+    <script src="main2.js"></script>
 </body>
 </html>
