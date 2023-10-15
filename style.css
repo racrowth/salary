@@ -15,3 +15,31 @@ body {
     background-color : #555;
 }
 
+.finalCorrValue {
+    font-size : 20px;
+    font-weight : bold;
+    color : pink;
+    display : inline-block;
+    margin-left : 1rem;
+    line-height : 100%;
+    text-align : center;
+}
+
+.altInputContainer {
+    display : block;
+    height : 1.2rem;
+    margin-top : 0.8rem; 
+}
+
+.finalCorrSolveValue {
+    font-size : 10px;
+    color : #888;
+    margin-top : 0.5rem;
+}
+
+.inputAlt {
+    display : inline-block;
+    line-height : 100%;
+    margin : auto;
+}
+

@@ -10,7 +10,7 @@ const coldTempErrTable = {
     '-50'    : [ 60,  90, 120, 150, 180, 210, 240, 270,  300,  450,  590,  890, 1190, 1500]
 };
 
-let trueAlt;
+let altHAA;
 let altArray = []; // HAA분해고도 어레이
 let correctedAltArray = [];
 let corrValue;
@@ -18,15 +18,37 @@ let corrections = [];
 let selectedTempRange;
 let totalCorrection = 0;
 let correctedAlt = 0;
-
+let inputFixs = 5;
 let inputTempCorr;
 
 
-function 진고도계산기() {
-    let 첫고도 = document.getElementById("firstAlt").value;
+function createAltInputBox() {
+
+    let inputFixText = document.getElementById('inputFixList')
+
+    for ( let i = 0; i < inputFixs; i++) {
+        inputFixText.innerHTML += 
+        `<div class="altInputContainer">
+            <input type="text" id="alt_${i + 1}" placeholder="Fix Altitude ${i + 1}" inputmode="numeric" pattern="[0-9]{4}" class="inputData" class="inputAlt"/>
+            <div id="altCorr_${i + 1}" class="finalCorrValue"></div>
+        </div>
+            <div id="altCorrSolve_${i + 1}" class="finalCorrSolveValue"></div>
+        `
+    }
+}   // inputFixs 변수에 있는 숫자만큼 Fix Altitude 인풋박스 1개와 div박스 2개를 만들고,
+    // 인풋박스는 alt_i 아이디와 inputAlt 클래스를 부여해줌
+    // 첫번째 div박스는 altCorr_i 아이디와 FinalCorrValue 클래스를 부여해줌
+    // 2번째 div박스는 altCorrSolve_i 아이디를 부여해줌.
+
+createAltInputBox()
+
+
+function HAA계산기(j) {
+    let Fix고도 = document.getElementById(`alt_${j + 1}`).value;
     let 공항고도 = document.getElementById("airportAlt").value;
 
-    trueAlt = 첫고도 - 공항고도;
+    altHAA = 
+    Fix고도 - 공항고도;
 }
 
 
@@ -42,17 +64,17 @@ function 진고도계산기() {
 // 1000보다 컸을경우, 하위 if문으로 alt1Remain이 또 1000보다 큰지 확인 후 반복
 
 function HAA분해기() { // Height Above Airport
-    if ( trueAlt <= 1000 ) {
-        altArray.push(trueAlt);
+    if ( altHAA <= 1000 ) {
+        altArray.push(altHAA);
         return altArray;
     }
     else {
         for ( let i = 0; i < 6; i++) {
             let calcIndex1 = 13 - i;
             
-            if ( trueAlt >= coldTempErrTable.scale[calcIndex1] ) {
+            if ( altHAA >= coldTempErrTable.scale[calcIndex1] ) {
                 let alt1 = coldTempErrTable.scale[calcIndex1];
-                let alt1Remain = trueAlt - alt1;
+                let alt1Remain = altHAA - alt1;
                 
                 altArray.push(alt1);
 
@@ -155,34 +177,6 @@ function 온도값보정기() {
 }
 
 
-
-// function 온도범위어레이확인() {
-//     let selectedTemp = document.getElementById("airportTemp").value;    // 입력한 온도값을 변수에 저장
-    
-//     for (let i = 0; i < tempRange.length; i++) {
-//         if ( selectedTemp = tempRange[i] ) {
-//             selectedTempRange = tempRange[i];
-//             return selectedTempRange;
-//         }
-//     }   // 입력한 온도값에 맞는 온도범위어레이를 찾아 selectedTempRange에 저장
-// }
-
-// function 보정값계산기() {
-//     for (let i = 0; i < correctedAltArray.length; i++) {
-//         for (let j = 0; j < selectedTempRange.length; j++) {
-//             if (correctedAltArray[i] = scale[j]) {
-//                 let correctionValue = selectedTempRange[j];
-//                 corrections.push(correctionValue);
-//             }
-//         }        
-//     }   // 수정값적용된 어레이의 각 값을 scale어레이의 값과 비교하여 어레이값 순서를 도출
-//         // 도출된 순서를 온도범위어레이에서 적용하여 보정값을 산출
-//         // 산출된 보정값을 correction 어레이에 push
-// }
-
-
-
-
 function 보정값계산기() {
 
     for (let i = 0; i < correctedAltArray.length; i++) {
@@ -202,35 +196,55 @@ function 보정값합치기() {
     return totalCorrection;
 }
     
-function 어레이리셋() {
+function 리셋() {
     altArray = [];
     correctedAltArray = [];
     corrections = [];
     totalCorrection = [];
 }
 
-function 최종값계산() {
-    let 입력값 = document.getElementById("firstAlt").value
+function 최종값계산(j) {
+    let 입력값 = document.getElementById(`alt_${j + 1}`).value;
     correctedAlt = parseFloat(입력값) + parseFloat(totalCorrection);
 }
 
-document.getElementById('altCalc').addEventListener("click", function() {
-    어레이리셋()
-    진고도계산기()
-    HAA분해기()
-    수정값적용기()
-    온도값보정기()
-    보정값계산기()
-    보정값합치기()
-    최종값계산()
 
-    let finalValue = document.getElementById('calculation');
+function 최종값표시() {
+
+    for (let j = 0; j < inputFixs; j++) {
+
+    let 입력값 = document.getElementById(`alt_${j + 1}`).value;
     
-    finalValue.innerHTML += `진고도 : ${trueAlt}</br>`;
-    finalValue.innerHTML += `분해된 어레이 : ${altArray}</br>`;
-    finalValue.innerHTML += `보정된 어레이 : ${correctedAltArray}</br>`;
-    finalValue.innerHTML += `수정된 온도값 : ${inputTempCorr}</br>`;
-    finalValue.innerHTML += `보정값 어레이 : ${corrections}</br>`;
-    finalValue.innerHTML += `보정값 : ${totalCorrection}</br>`;
-    finalValue.innerHTML += `보정된 최종 값 : ${correctedAlt}</br>`;
-})
+    if (입력값 == "") {
+        break;
+    }
+    else if (Number.isNaN(입력값)) {
+        break;
+    }    
+    else {
+    let finalValue = document.getElementById(`altCorr_${j + 1}`);
+    let finalValueSolve = document.getElementById(`altCorrSolve_${j + 1}`);
+
+        리셋()
+        HAA계산기(j)
+        HAA분해기()
+        수정값적용기()
+        온도값보정기()
+        보정값계산기()
+        보정값합치기()
+        최종값계산(j)
+                
+        finalValue.innerHTML = "";
+        finalValue.innerHTML += correctedAlt;
+        finalValueSolve.innerHTML = "";
+        finalValueSolve.innerHTML += ` HAA : ${altHAA} / 구간분해고도 : ${altArray} / 구간별보정값 : ${corrections} / 합계보정값 : ${totalCorrection}`;
+    }
+    }
+}
+
+let inputDataElements = document.getElementsByClassName("inputData");
+
+for (let i = 0; i < inputDataElements.length; i++) {
+    inputDataElements[i].addEventListener("input", 최종값표시)
+    inputDataElements[i].addEventListener("blur", 최종값표시)
+}
