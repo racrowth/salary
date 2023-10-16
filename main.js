@@ -29,7 +29,7 @@ function createAltInputBox() {
     for ( let i = 0; i < inputFixs; i++) {
         inputFixText.innerHTML += 
         `<div class="altInputContainer">
-            <input type="text" id="alt_${i + 1}" placeholder="Fix Altitude ${i + 1}" inputmode="numeric" pattern="[0-9]*" class="inputData inputAlt"/>
+            <input type="tel" id="alt_${i + 1}" placeholder="Fix Altitude ${i + 1}" inputmode="numeric" pattern="[0-9]*" class="inputData inputAlt"/>
             <div id="altCorr_${i + 1}" class="finalCorrValue"></div>
         </div>
             <div id="altCorrSolve_${i + 1}" class="finalCorrSolveValue"></div>
