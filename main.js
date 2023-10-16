@@ -29,7 +29,7 @@ function createAltInputBox() {
     for ( let i = 0; i < inputFixs; i++) {
         inputFixText.innerHTML += 
         `<div class="altInputContainer">
-            <input type="tel" id="alt_${i + 1}" placeholder="Fix Altitude ${i + 1}" inputmode="numeric" pattern="[0-9]*" class="inputData inputAlt"/>
+            <input type="text" id="alt_${i + 1}" placeholder="Fix Altitude ${i + 1}" inputmode="numeric" pattern="[0-9]*" class="inputData inputAlt"/>
             <div id="altCorr_${i + 1}" class="finalCorrValue"></div>
         </div>
             <div id="altCorrSolve_${i + 1}" class="finalCorrSolveValue"></div>
@@ -280,25 +280,7 @@ function 최종값표시() {
 
 let inputDataElements = document.querySelectorAll(".inputData");
 
-function 숫자인지확인() {
-inputDataElements.forEach(function(inputDataElement) {
-    inputDataElement.addEventListener('input', function() {
-      const value = this.value;
-      const regex = /^[0-9-]*$/;
-      
-      if (!regex.test(value)) {
-        // 잘못된 값이 입력되었을 때 처리
-        this.value = value.replace(/[^0-9-]/g, '');
-        alert('숫자와 "-" 기호만 입력할 수 있습니다.');
-      }
-    });
-});
-}
-
-
-
 for (let i = 0; i < inputDataElements.length; i++) {
     inputDataElements[i].addEventListener("input", 최종값표시)
     inputDataElements[i].addEventListener("blur", 최종값표시)
-    숫자인지확인();
 }

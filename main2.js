@@ -37,8 +37,21 @@ function setElevation() {
 document.getElementById('airportId').addEventListener('change', setElevation); 
  // airportId에 change 이벤트 리스너를 붙여주고 setElevation 함수 실행해줌.
 
-document.getElementById('airportTemp').addEventListener('change', (e) => {
-    if (document.getElementById('airportTemp').value > 10) {
+let airportTempData =  document.getElementById('airportTemp')
+
+airportTempData.addEventListener('change', (e) => {
+    if (airportTempData.value > 10) {
         alert("10도 이하의 값을 입력해주세요!");
-        document.getElementById('airportTemp').value = "";}
+        airportTempData.value = "";}
+    else if (isNaN(airportTempData.value)) {
+        alert("숫자만 입력해주세요!");
+        airportTempData.value = "";}    
+})
+
+let airportAltData = document.getElementById('airportAlt');
+
+airportAltData.addEventListener('change', (e) => {
+    if (isNaN(airportAltData.value)) {
+        alert("숫자만 입력해주세요!");
+        airportAltData.value = "";}    
 })
