@@ -1,6 +1,7 @@
 const airports = [
     { airportId   : 'RKSI', airportElv  : 23 },
     { airportId   : 'RKSS', airportElv  : 59 },
+    { airportId   : 'RKPC', airportElv  : 119 },
     { airportId   : 'RKTN', airportElv  : 120 },
     { airportId   : 'RKTU', airportElv  : 192 },
     { airportId   : 'RKPK', airportElv  : 13 },
