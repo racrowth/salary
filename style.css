@@ -58,7 +58,7 @@ input::placeholder {
     font-weight : 900;
 }
 
-.inputData {
+#airportId, .inputData {
     height : 2rem;
     width : 9rem;
 }
