@@ -4,16 +4,33 @@
 }
 
 body {
-    font-size : 22px;
-
+    font-size : 16px;
+    background-color : #555;
 }
+
+input {
+    background-color : #999;
+}
+
+input::placeholder {
+    color: rgb(210, 210, 210);
+    font-style: italic;
+  }
 
 #container {
     margin : 0 auto;
+    padding : 0.2rem;
     width : 100vw;
     height : 100vh;
-    background-color : #555;
+    color : #CCCC00;
 }
+
+#container p {
+    font-size : 0.8rem;
+    width : 50%;
+    padding : 0.3rem 0 0 0.3rem;
+ }
+
 
 .finalCorrValue {
     font-size : 1.2rem;
@@ -28,13 +45,17 @@ body {
 .altInputContainer {
     display : block;
     height : 2rem;
-    margin-top : 0.8rem; 
 }
 
 .finalCorrSolveValue {
     font-size : 0.7rem;
     color : #888;
-    margin-top : 0.5rem;
+    margin : 0.2rem 0 0.6rem 0;
+}
+
+.finalCorrSolveValue span {
+    color : #AAA;
+    font-weight : 900;
 }
 
 .inputData {
@@ -46,5 +67,9 @@ body {
     display : inline-block;
     line-height : 100%;
     margin : auto;
+}
+
+.inputFixList {
+    border : 1px solid; 
 }
 

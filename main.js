@@ -29,7 +29,7 @@ function createAltInputBox() {
     for ( let i = 0; i < inputFixs; i++) {
         inputFixText.innerHTML += 
         `<div class="altInputContainer">
-            <input type="text" id="alt_${i + 1}" placeholder="Fix Altitude ${i + 1}" inputmode="numeric" pattern="[0-9]{4}" class="inputData" class="inputAlt"/>
+            <input type="text" id="alt_${i + 1}" placeholder="Fix Altitude ${i + 1}" inputmode="numeric" pattern="[0-9]{4}" class="inputData inputAlt"/>
             <div id="altCorr_${i + 1}" class="finalCorrValue"></div>
         </div>
             <div id="altCorrSolve_${i + 1}" class="finalCorrSolveValue"></div>
@@ -41,6 +41,36 @@ function createAltInputBox() {
     // 2번째 div박스는 altCorrSolve_i 아이디를 부여해줌.
 
 createAltInputBox()
+
+
+// let inputAltElements = document.getElementsByClassName("inputAlt");
+
+// for (let i = 0; i < inputAltElements.length; i++) {
+//     inputAltElements[i].addEventListener("change", function() {
+//         if (inputAltElements[i].value > 9999) {
+//             alert("10,000피트 이하의 값을 입력해주세요!")
+//             inputAltElements[i].value = "";
+//         }
+//     })
+// }
+
+
+function handleInputChange(event) {
+    const inputElement = event.target;
+    const enteredValue = parseInt(inputElement.value, 10);
+
+    if (enteredValue > 9999) {
+        alert("10,000피트 이하의 값을 입력해주세요!");
+        inputElement.value = "";
+    }
+}
+
+const inputAltElements = document.querySelectorAll(".inputAlt");
+
+for (let i = 0; i < inputAltElements.length; i++) {
+    inputAltElements[i].addEventListener("change", handleInputChange);
+}
+
 
 
 function HAA계산기(j) {
@@ -184,7 +214,6 @@ function 보정값계산기() {
             if (correctedAltArray[i] == coldTempErrTable.scale[j]) {
                 corrValue = coldTempErrTable[inputTempCorr][j]
                 corrections.push(corrValue);
-                // corrections.push(coldTempErrTable[inputTempCorr][j]) // 요기서 에러나네 확인!
             }
         }
     }
@@ -233,11 +262,18 @@ function 최종값표시() {
         보정값계산기()
         보정값합치기()
         최종값계산(j)
-                
+
+        let finalNumber = parseInt(document.getElementById(`alt_${j + 1}`).value, 10);
+
         finalValue.innerHTML = "";
-        finalValue.innerHTML += correctedAlt;
         finalValueSolve.innerHTML = "";
-        finalValueSolve.innerHTML += ` HAA : ${altHAA} / 구간분해고도 : ${altArray} / 구간별보정값 : ${corrections} / 합계보정값 : ${totalCorrection}`;
+        console.log(finalNumber);
+
+        if (finalNumber < 10000) {
+            finalValue.innerHTML += correctedAlt;
+            finalValueSolve.innerHTML += ` HAA : ${altHAA} / 구간분해고도 : ${altArray} / 구간별보정값 : ${corrections} / 합계보정값 : <span>${totalCorrection}</span>`;
+        }
+    
     }
     }
 }

@@ -10,11 +10,14 @@
 
     <div id="container">
         <div id="inputSection"></div>
-        <input type="text" list="airportList" id="airportId" placeholder="Enter ICAO Airport Code" class="inputData"/>
+        <p>ICAO Airport Code</p>
+        <input type="text" list="airportList" id="airportId" placeholder="Enter Airport Code" class="inputData"/>
         <datalist id="airportList"></datalist>
         <input type="text" id="airportAlt" placeholder="Airport Altitude" inputmode="numeric" pattern="[0-9]*" class="inputData"/>
+        <p>Airport Temperature</p>
         <input type="text" list="airportTempList" id="airportTemp" placeholder="Airport Temperature" inputmode="numeric" pattern="[0-9]*" class="inputData"/>
         <datalist id="airportTempList"></datalist>
+        <p>Indicated Altitude</p>
         <div id="inputFixList"></div>
     </div>
 
